@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Playfair_Display } from "next/font/google";
+import { SitePreloader } from "@/components/site-preloader";
 import "./globals.css";
 
 const playfairDisplay = Playfair_Display({
@@ -30,7 +31,10 @@ export default function RootLayout({
       lang="en"
       className={`${playfairDisplay.variable} ${dmSans.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <SitePreloader />
+        {children}
+      </body>
     </html>
   );
 }

@@ -118,3 +118,25 @@ h3 {
     transform: translateY(14px);
   }
 }
+
+@keyframes preloader-bar {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.animate-preloader-bar {
+  transform: scaleX(0);
+  transform-origin: left center;
+  animation: preloader-bar 1.85s cubic-bezier(0.33, 1, 0.36, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-preloader-bar {
+    animation: none;
+    transform: scaleX(1);
+  }
+}
