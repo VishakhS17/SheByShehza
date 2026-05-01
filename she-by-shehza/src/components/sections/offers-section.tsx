@@ -95,32 +95,64 @@ export function OffersSection() {
       </div>
 
       <div className="mt-12 grid gap-6 md:grid-cols-3">
-        {offerings.map((item) =>
-          item.title === "1:1 Coaching" ? (
-            <article key={item.title} className={cardClassName}>
-              {accentLine}
-              <h3 className="mt-4 text-2xl">{item.title}</h3>
-              <p className="mt-3 text-foreground/80">
-                {item.description}{" "}
-                <button
-                  type="button"
-                  className="font-normal text-foreground underline decoration-foreground/30 underline-offset-[5px] transition hover:decoration-foreground/55 disabled:cursor-not-allowed disabled:opacity-50"
-                  aria-expanded={packagesVisible}
-                  disabled={packagesExiting}
-                  onClick={togglePackages}
-                >
-                  {packagesVisible ? "Read less" : "Read more"}
-                </button>
-              </p>
-            </article>
-          ) : (
-            <article key={item.title} className={cardClassName}>
-              {accentLine}
-              <h3 className="mt-4 text-2xl">{item.title}</h3>
-              <p className="mt-3 text-foreground/80">{item.description}</p>
-            </article>
-          ),
-        )}
+        {offerings.map((item) => {
+          if (item.title !== "1:1 Coaching") {
+            return (
+              <article key={item.title} className={cardClassName}>
+                {accentLine}
+                <h3 className="mt-4 text-2xl">{item.title}</h3>
+                <p className="mt-3 text-foreground/80">{item.description}</p>
+              </article>
+            );
+          }
+
+          return (
+            <div key={item.title} className="contents">
+              <article className={cardClassName}>
+                {accentLine}
+                <h3 className="mt-4 text-2xl">{item.title}</h3>
+                <p className="mt-3 text-foreground/80">
+                  {item.description}{" "}
+                  <button
+                    type="button"
+                    className="font-normal text-foreground underline decoration-foreground/30 underline-offset-[5px] transition hover:decoration-foreground/55 disabled:cursor-not-allowed disabled:opacity-50"
+                    aria-expanded={packagesVisible}
+                    disabled={packagesExiting}
+                    onClick={togglePackages}
+                  >
+                    {packagesVisible ? "Read less" : "Read more"}
+                  </button>
+                </p>
+              </article>
+
+              {packagesVisible ? (
+                <div className="md:hidden">
+                  <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1">
+                    {coachingPackages.map((pkg, index) => {
+                      const delayMs = packagesExiting
+                        ? (coachingPackages.length - 1 - index) * PACKAGE_STAGGER_MS
+                        : index * PACKAGE_STAGGER_MS;
+
+                      return (
+                        <article
+                          key={pkg.title}
+                          className={`${cardClassName} min-w-[88%] snap-center ${
+                            packagesExiting ? "animate-gentle-fall" : "animate-gentle-rise"
+                          }`}
+                          style={{ animationDelay: `${delayMs}ms` }}
+                        >
+                          {accentLine}
+                          <h3 className="mt-4 text-2xl">{pkg.title}</h3>
+                          <p className="mt-3 text-foreground/80">{pkg.description}</p>
+                        </article>
+                      );
+                    })}
+                  </div>
+                </div>
+              ) : null}
+            </div>
+          );
+        })}
 
         {packagesVisible
           ? coachingPackages.map((pkg, index) => {
@@ -130,11 +162,9 @@ export function OffersSection() {
 
               return (
                 <article
-                  key={pkg.title}
-                  className={`${cardClassName} ${
-                    packagesExiting
-                      ? "animate-gentle-fall"
-                      : "animate-gentle-rise"
+                  key={`desktop-${pkg.title}`}
+                  className={`${cardClassName} hidden md:block ${
+                    packagesExiting ? "animate-gentle-fall" : "animate-gentle-rise"
                   }`}
                   style={{ animationDelay: `${delayMs}ms` }}
                 >
