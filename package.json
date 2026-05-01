@@ -1,0 +1,10 @@
+{
+  "name": "she-by-shehza-workspace",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix ./she-by-shehza run dev",
+    "build": "npm --prefix ./she-by-shehza run build",
+    "start": "npm --prefix ./she-by-shehza run start",
+    "lint": "npm --prefix ./she-by-shehza run lint"
+  }
+}

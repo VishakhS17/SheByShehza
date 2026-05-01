@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+:root {
+  --background: #f8f3ef;
+  --foreground: #3f3b39;
+  --blush: #dca6ad;
+  --blush-soft: #f2dfdc;
+  --rose: #c98d98;
+  --gold: #c6ac79;
+  --surface: #fdf9f7;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-blush: var(--blush);
+  --color-blush-soft: var(--blush-soft);
+  --color-rose: var(--rose);
+  --color-gold: var(--gold);
+  --color-surface: var(--surface);
+  --font-serif: var(--font-serif);
+  --font-sans: var(--font-sans);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  letter-spacing: 0.02em;
+  line-height: 1.3;
+  font-weight: 500;
+}
+
+.soft-card {
+  background: linear-gradient(
+    160deg,
+    color-mix(in srgb, var(--surface) 88%, white 12%),
+    color-mix(in srgb, var(--blush-soft) 32%, var(--surface) 68%)
+  );
+  border-radius: 1.5rem;
+  border: 1px solid color-mix(in srgb, var(--blush) 24%, white 76%);
+  box-shadow: 0 14px 36px rgba(82, 63, 63, 0.07);
+}
+
+.section-shell {
+  @apply mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-24;
+}
+
+.cta-button {
+  @apply inline-flex items-center justify-center rounded-full px-7 py-3.5 text-sm tracking-[0.03em] transition-all duration-300;
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--blush) 84%, white 16%),
+    color-mix(in srgb, var(--rose) 64%, white 36%)
+  );
+  color: var(--foreground);
+  box-shadow: 0 12px 24px rgba(82, 63, 63, 0.12);
+}
+
+.cta-button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 26px rgba(82, 63, 63, 0.16);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--blush) 76%, white 24%),
+    color-mix(in srgb, var(--rose) 56%, white 44%)
+  );
+}
+
+@keyframes gentle-rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-gentle-rise {
+  animation: gentle-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes gentle-fall {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}
+
+.animate-gentle-fall {
+  animation: gentle-fall 0.7s cubic-bezier(0.55, 0.06, 0.68, 0.19) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-gentle-rise {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .animate-gentle-fall {
+    animation: none;
+    opacity: 0;
+    transform: translateY(14px);
+  }
+}

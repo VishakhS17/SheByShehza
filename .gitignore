@@ -1,0 +1,15 @@
+# Dependencies & build output
+node_modules/
+she-by-shehza/node_modules/
+she-by-shehza/.next/
+she-by-shehza/out/
+
+# Env & local
+.env
+.env.*
+!.env.example
+
+# OS & logs
+.DS_Store
+*.log
+npm-debug.log*
