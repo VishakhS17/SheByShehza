@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f3ef;
+  --background: #f8f1ec;
   --foreground: #3f3b39;
-  --blush: #dca6ad;
-  --blush-soft: #f2dfdc;
-  --rose: #c98d98;
-  --gold: #c6ac79;
+  --blush: #d88897;
+  --blush-soft: #f3d7d7;
+  --rose: #b96d85;
+  --gold: #c9a162;
   --surface: #fdf9f7;
 }
 
@@ -42,12 +42,12 @@ h3 {
 .soft-card {
   background: linear-gradient(
     160deg,
-    color-mix(in srgb, var(--surface) 88%, white 12%),
-    color-mix(in srgb, var(--blush-soft) 32%, var(--surface) 68%)
+    color-mix(in srgb, var(--surface) 80%, white 20%),
+    color-mix(in srgb, var(--blush-soft) 46%, var(--surface) 54%)
   );
   border-radius: 1.5rem;
-  border: 1px solid color-mix(in srgb, var(--blush) 24%, white 76%);
-  box-shadow: 0 14px 36px rgba(82, 63, 63, 0.07);
+  border: 1px solid color-mix(in srgb, var(--blush) 40%, white 60%);
+  box-shadow: 0 16px 36px rgba(82, 63, 63, 0.1);
 }
 
 .section-shell {
@@ -58,11 +58,11 @@ h3 {
   @apply inline-flex items-center justify-center rounded-full px-7 py-3.5 text-sm tracking-[0.03em] transition-all duration-300;
   background: linear-gradient(
     135deg,
-    color-mix(in srgb, var(--blush) 84%, white 16%),
-    color-mix(in srgb, var(--rose) 64%, white 36%)
+    color-mix(in srgb, var(--blush) 90%, white 10%),
+    color-mix(in srgb, var(--rose) 76%, white 24%)
   );
   color: var(--foreground);
-  box-shadow: 0 12px 24px rgba(82, 63, 63, 0.12);
+  box-shadow: 0 14px 26px rgba(82, 63, 63, 0.16);
 }
 
 .cta-button:hover {
@@ -70,8 +70,8 @@ h3 {
   box-shadow: 0 14px 26px rgba(82, 63, 63, 0.16);
   background: linear-gradient(
     135deg,
-    color-mix(in srgb, var(--blush) 76%, white 24%),
-    color-mix(in srgb, var(--rose) 56%, white 44%)
+    color-mix(in srgb, var(--blush) 82%, white 18%),
+    color-mix(in srgb, var(--rose) 66%, white 34%)
   );
 }
 

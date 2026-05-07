@@ -42,10 +42,10 @@ const PACKAGE_ANIM_MS = 700;
 const PACKAGE_STAGGER_MS = 90;
 
 const cardClassName =
-  "soft-card p-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(82,63,63,0.11)]";
+  "rounded-3xl border border-gold/45 bg-[linear-gradient(165deg,_color-mix(in_srgb,var(--blush)_42%,white_58%),_color-mix(in_srgb,var(--gold)_20%,white_80%))] p-8 shadow-[0_14px_32px_rgba(82,63,63,0.09)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(82,63,63,0.11)]";
 
 const accentLine = (
-  <span className="inline-block h-1.5 w-12 rounded-full bg-[linear-gradient(to_right,_rgba(220,166,173,0.9),_rgba(198,172,121,0.65))]" />
+  <span className="inline-block h-1.5 w-12 rounded-full bg-[linear-gradient(to_right,_rgba(201,161,98,0.98),_rgba(216,136,151,0.72))] ring-1 ring-gold/30" />
 );
 
 export function OffersSection() {
