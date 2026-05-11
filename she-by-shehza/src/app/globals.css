@@ -1,78 +1,166 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8f1ec;
-  --foreground: #3f3b39;
-  --blush: #d88897;
-  --blush-soft: #f3d7d7;
-  --rose: #b96d85;
-  --gold: #c9a162;
-  --surface: #fdf9f7;
+  --color-bg-primary: #fdf8f5;
+  --color-bg-soft: #fdf5f0;
+  --color-bg-peach: #fef2eb;
+  --color-bg-blush: #fce8e4;
+  --color-bg-pink-band: #f7ddd5;
+  --color-gold: #b8914a;
+  --color-gold-light: #e0c9a8;
+  --color-blush-mid: #c9956a;
+  --color-text-dark: #2e1f1a;
+  --color-text-body: #6e5248;
+  --color-text-muted: #8a6e65;
+  --color-text-on-gold: #fefaf4;
+  --color-border-soft: #f0ddd3;
+  --color-border-blush: #efc4b8;
+  --color-border-pink: #f5cfc7;
+  --color-stats-divider: #edd9cc;
+  --color-stats-label: #a08070;
+  --color-card-border: #edd9cc;
+  --color-problem-card-border: #f0c4bc;
+  --color-problem-card-bg: #fdf5f3;
+  --color-attribution: #a07060;
+  --color-cta-footnote: #b0908a;
+  --color-dot-inactive: #e8b8aa;
+  --font-cormorant: var(--font-cormorant);
+  --font-inter: var(--font-inter);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-blush: var(--blush);
-  --color-blush-soft: var(--blush-soft);
-  --color-rose: var(--rose);
-  --color-gold: var(--gold);
-  --color-surface: var(--surface);
-  --font-serif: var(--font-serif);
-  --font-sans: var(--font-sans);
+  --color-bg-primary: var(--color-bg-primary);
+  --color-bg-soft: var(--color-bg-soft);
+  --color-bg-peach: var(--color-bg-peach);
+  --color-bg-blush: var(--color-bg-blush);
+  --color-bg-pink-band: var(--color-bg-pink-band);
+  --color-gold: var(--color-gold);
+  --color-gold-light: var(--color-gold-light);
+  --color-blush-mid: var(--color-blush-mid);
+  --color-text-dark: var(--color-text-dark);
+  --color-text-body: var(--color-text-body);
+  --color-text-muted: var(--color-text-muted);
+  --color-text-on-gold: var(--color-text-on-gold);
+  --color-border-soft: var(--color-border-soft);
+  --color-border-blush: var(--color-border-blush);
+  --color-border-pink: var(--color-border-pink);
+  --color-stats-divider: var(--color-stats-divider);
+  --color-stats-label: var(--color-stats-label);
+  --color-card-border: var(--color-card-border);
+  --color-problem-card-border: var(--color-problem-card-border);
+  --color-problem-card-bg: var(--color-problem-card-bg);
+  --color-attribution: var(--color-attribution);
+  --color-cta-footnote: var(--color-cta-footnote);
+  --color-dot-inactive: var(--color-dot-inactive);
+  --font-cormorant: var(--font-cormorant);
+  --font-inter: var(--font-inter);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
-  line-height: 1.7;
+  background: var(--color-bg-primary);
+  color: var(--color-text-body);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 1.85;
   letter-spacing: 0.01em;
+}
+
+.font-inter {
+  font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+.font-cormorant {
+  font-family: var(--font-cormorant), Georgia, "Times New Roman", serif;
 }
 
 h1,
 h2,
 h3 {
-  font-family: var(--font-serif), Georgia, "Times New Roman", serif;
+  font-family: var(--font-cormorant), Georgia, "Times New Roman", serif;
+  color: var(--color-text-dark);
   letter-spacing: 0.02em;
-  line-height: 1.3;
-  font-weight: 500;
-}
-
-.soft-card {
-  background: linear-gradient(
-    160deg,
-    color-mix(in srgb, var(--surface) 80%, white 20%),
-    color-mix(in srgb, var(--blush-soft) 46%, var(--surface) 54%)
-  );
-  border-radius: 1.5rem;
-  border: 1px solid color-mix(in srgb, var(--blush) 40%, white 60%);
-  box-shadow: 0 16px 36px rgba(82, 63, 63, 0.1);
+  line-height: 1.25;
 }
 
 .section-shell {
-  @apply mx-auto w-full max-w-6xl px-6 py-20 md:px-10 md:py-24;
+  @apply mx-auto w-full max-w-6xl px-6 py-12 md:px-12 md:py-16;
 }
 
-.cta-button {
-  @apply inline-flex items-center justify-center rounded-full px-7 py-3.5 text-sm tracking-[0.03em] transition-all duration-300;
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--blush) 90%, white 10%),
-    color-mix(in srgb, var(--rose) 76%, white 24%)
-  );
-  color: var(--foreground);
-  box-shadow: 0 14px 26px rgba(82, 63, 63, 0.16);
+.eyebrow {
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-gold);
+  margin-bottom: 12px;
+  display: block;
 }
 
-.cta-button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 14px 26px rgba(82, 63, 63, 0.16);
-  background: linear-gradient(
-    135deg,
-    color-mix(in srgb, var(--blush) 82%, white 18%),
-    color-mix(in srgb, var(--rose) 66%, white 34%)
-  );
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  border-radius: 2px;
+  background: var(--color-gold);
+  color: var(--color-text-on-gold);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
+}
+
+.btn-primary:hover {
+  opacity: 0.92;
+}
+
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  border-radius: 2px;
+  border: 1px solid var(--color-gold-light);
+  color: var(--color-gold);
+  background: transparent;
+  font-family: var(--font-inter), system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: opacity 0.2s ease;
+}
+
+.btn-ghost:hover {
+  opacity: 0.9;
+}
+
+.testimonial-quote {
+  position: relative;
+}
+
+.testimonial-quote::before {
+  content: "\201C";
+  float: left;
+  font-family: var(--font-cormorant), Georgia, "Times New Roman", serif;
+  font-size: 72px;
+  font-weight: 400;
+  line-height: 0.55;
+  margin-right: 0.35rem;
+  margin-top: 0.08em;
+  color: var(--color-gold);
+}
+
+.testimonial-quote > p {
+  overflow: hidden;
+}
+
+.testimonial-quote > footer {
+  clear: both;
 }
 
 @keyframes gentle-rise {

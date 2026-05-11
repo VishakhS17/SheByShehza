@@ -1,40 +1,44 @@
-import { SiteHeader } from "@/components/sections/site-header";
-
 export function HeroSection() {
   return (
-    <section className="relative min-h-dvh overflow-hidden">
-      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden">
+    <section className="relative overflow-hidden border-b border-border-soft bg-bg-soft">
+      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
+        <div className="hidden size-full bg-bg-soft motion-reduce:block" />
         <video
+          className="absolute inset-0 size-full scale-105 object-cover motion-reduce:hidden [filter:blur(3px)]"
           autoPlay
-          className="absolute left-1/2 top-1/2 h-[118%] min-h-full w-[118%] min-w-full -translate-x-1/2 -translate-y-1/2 object-cover"
-          loop
           muted
+          loop
           playsInline
-          preload="auto"
+          preload="metadata"
         >
           <source src="/hero.mp4" type="video/mp4" />
         </video>
+        <div className="absolute inset-0 bg-bg-soft/60 motion-reduce:bg-bg-soft" />
       </div>
-      <div className="absolute inset-0 z-[1] bg-background/16" />
-      <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_top,_rgba(216,136,151,0.35),_transparent_58%)]" />
-      <div className="absolute inset-0 z-[1] bg-[radial-gradient(circle_at_85%_20%,_rgba(201,161,98,0.14),_transparent_44%)]" />
-      <div className="absolute inset-x-0 bottom-0 z-[1] h-28 bg-[linear-gradient(to_top,_rgba(248,243,239,0.38),_transparent)]" />
 
-      <SiteHeader />
+      <div className="relative z-10 mx-auto w-full max-w-3xl px-6 py-16 md:px-12 md:py-20">
+        <span className="eyebrow">Confidence &amp; Clarity Coaching</span>
 
-      <div className="section-shell relative z-10 flex min-h-dvh flex-col items-center justify-center pt-24 pb-16 text-center md:pt-28 md:pb-20">
-        <p className="mb-6 text-xs tracking-[0.18em] text-[#e8bf78] uppercase [text-shadow:0_1px_2px_rgba(255,255,255,0.45)]">
-          Confidence &amp; Clarity Coaching
-        </p>
-        <h1 className="max-w-3xl text-4xl text-foreground md:text-6xl">
-          You&apos;ve been holding everything together... but who&apos;s holding
-          you?
+        <h1 className="font-cormorant text-4xl font-normal leading-[1.12] text-text-dark md:text-[3.375rem]">
+          You&apos;ve been holding everything together...
+          <br />
+          <span className="italic text-blush-mid">
+            but who&apos;s holding you?
+          </span>
         </h1>
-        <span className="mt-6 inline-block h-[2px] w-28 rounded-full bg-[linear-gradient(to_right,_rgba(232,191,120,1),_rgba(216,136,151,0.78))]" />
-        <p className="mt-7 max-w-2xl text-base text-foreground/80 md:text-lg">
+
+        <p className="mt-8 max-w-[320px] font-inter text-base font-light leading-[1.85] text-text-muted md:text-[17px]">
           A safe space for women to pause, be heard, and find themselves again.
         </p>
-        <button className="cta-button mt-10">Book a Safe Space Call</button>
+
+        <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:flex-wrap sm:items-center">
+          <a href="#contact" className="btn-primary text-center">
+            Book a Safe Space Call
+          </a>
+          <a href="#services" className="btn-ghost text-center">
+            Complimentary Clarity Call
+          </a>
+        </div>
       </div>
     </section>
   );

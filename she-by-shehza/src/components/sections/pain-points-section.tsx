@@ -6,16 +6,29 @@ const painPoints = [
 
 export function PainPointsSection() {
   return (
-    <section className="section-shell">
-      <div className="rounded-[2rem] border border-blush/35 bg-[linear-gradient(165deg,_rgba(243,215,215,0.82),_rgba(248,235,232,0.9))] px-8 py-14 text-center shadow-[0_14px_30px_rgba(82,63,63,0.08)] md:px-14">
-        <p className="text-xs tracking-[0.16em] text-foreground/65 uppercase">
-          This is you
-        </p>
-        <h2 className="mt-4 text-3xl md:text-4xl">If this feels familiar, you are not alone.</h2>
-        <ul className="mx-auto mt-10 grid max-w-2xl gap-6 text-lg text-foreground/80">
+    <section
+      id="pain-points"
+      className="border-y border-border-pink bg-bg-blush"
+    >
+      <div className="section-shell">
+        <span className="eyebrow">This is you</span>
+        <h2 className="max-w-[380px] font-cormorant text-[28px] font-semibold text-text-dark md:text-[30px]">
+          If this feels familiar, you are not alone.
+        </h2>
+
+        <ul className="mt-10 grid gap-4">
           {painPoints.map((point) => (
-            <li key={point} className="font-light">
-              {point}
+            <li
+              key={point}
+              className="flex gap-4 rounded-[2px] border border-problem-card-border bg-problem-card-bg px-5 py-4"
+            >
+              <span
+                className="mt-1.5 h-[6px] w-[6px] shrink-0 rounded-full bg-blush-mid"
+                aria-hidden
+              />
+              <p className="font-inter text-base font-light leading-[1.85] text-text-body md:text-[17px]">
+                {point}
+              </p>
             </li>
           ))}
         </ul>

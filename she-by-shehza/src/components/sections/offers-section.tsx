@@ -1,22 +1,36 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type Dispatch,
+  type ReactNode,
+  type SetStateAction,
+} from "react";
 
 const offerings = [
   {
     title: "Complimentary Clarity Call",
     description:
       "A gentle, confidential ~45 minutes to share what feels heavy, ask anything that's on your mind, and sense whether this space is the right fit - no pressure, just honest conversation.",
+    tag: "Start here · Free",
+    featured: true,
   },
   {
     title: "1:1 Coaching",
     description:
       "A deeply safe space paired with compassionate structure for steady personal growth.",
+    tag: "Coaching",
+    featured: false,
   },
   {
     title: "Workshops",
     description:
       "Gentle group circles for connection, guided reflection, and shared emotional clarity.",
+    tag: "Group",
+    featured: false,
   },
 ] as const;
 
@@ -38,143 +52,253 @@ const coachingPackages = [
   },
 ] as const;
 
-const PACKAGE_ANIM_MS = 700;
-const PACKAGE_STAGGER_MS = 90;
+const PACKAGE_COUNT = coachingPackages.length;
+const CAROUSEL_TRACK_WIDTH = `${PACKAGE_COUNT * 100}%`;
 
-const cardClassName =
-  "rounded-3xl border border-gold/45 bg-[linear-gradient(165deg,_color-mix(in_srgb,var(--blush)_42%,white_58%),_color-mix(in_srgb,var(--gold)_20%,white_80%))] p-8 shadow-[0_14px_32px_rgba(82,63,63,0.09)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_34px_rgba(82,63,63,0.11)]";
+function ServiceCard({
+  title,
+  description,
+  tag,
+  featured,
+  children,
+}: {
+  title: string;
+  description: string;
+  tag: string;
+  featured: boolean;
+  children?: ReactNode;
+}) {
+  return (
+    <div
+      className={`rounded-[2px] border p-6 ${
+        featured
+          ? "border-gold bg-[#fefaf4]"
+          : "border-card-border bg-white"
+      }`}
+    >
+      <p className="font-inter text-[9px] font-medium uppercase tracking-[0.14em] text-gold">
+        {tag}
+      </p>
+      <h3 className="mt-3 font-cormorant text-xl font-semibold text-text-dark">
+        {title}
+      </h3>
+      <div className="mt-3 font-inter text-base font-light leading-[1.85] text-text-body md:text-[17px]">
+        {children ?? <p>{description}</p>}
+      </div>
+    </div>
+  );
+}
 
-const accentLine = (
-  <span className="inline-block h-1.5 w-12 rounded-full bg-[linear-gradient(to_right,_rgba(201,161,98,0.98),_rgba(216,136,151,0.72))] ring-1 ring-gold/30" />
-);
-
-export function OffersSection() {
-  const [packagesVisible, setPackagesVisible] = useState(false);
-  const [packagesExiting, setPackagesExiting] = useState(false);
+function PackagesCarousel({
+  expanded,
+  slide,
+  setSlide,
+}: {
+  expanded: boolean;
+  slide: number;
+  setSlide: Dispatch<SetStateAction<number>>;
+}) {
+  const go = useCallback((delta: number) => {
+    setSlide((s) => (s + delta + PACKAGE_COUNT) % PACKAGE_COUNT);
+  }, [setSlide]);
 
   useEffect(() => {
-    if (!packagesExiting) return;
+    if (!expanded) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "ArrowLeft") {
+        e.preventDefault();
+        go(-1);
+      }
+      if (e.key === "ArrowRight") {
+        e.preventDefault();
+        go(1);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [go, expanded]);
 
-    const reducedMotion =
-      typeof window !== "undefined" &&
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  return (
+    <div
+      className="rounded-[2px] border border-card-border bg-white"
+      aria-hidden={!expanded}
+    >
+      <div className="relative">
+        <div className="overflow-hidden">
+          <div
+            className="flex transition-transform duration-500 ease-[cubic-bezier(0.33,1,0.36,1)] motion-reduce:transition-none"
+            style={{
+              width: CAROUSEL_TRACK_WIDTH,
+              transform: `translateX(calc(-${slide} * 100% / ${PACKAGE_COUNT}))`,
+            }}
+          >
+            {coachingPackages.map((pkg) => (
+              <div
+                key={pkg.title}
+                className="w-1/3 shrink-0 px-14 py-8 md:px-16 md:py-9"
+              >
+                <p className="font-inter text-[9px] font-medium uppercase tracking-[0.14em] text-gold">
+                  Packages
+                </p>
+                <p className="mt-3 font-cormorant text-xl font-semibold text-text-dark">
+                  {pkg.title}
+                </p>
+                <p className="mt-3 font-inter text-base font-light leading-[1.85] text-text-body md:text-[17px]">
+                  {pkg.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
 
-    const lastStartDelay =
-      (coachingPackages.length - 1) * PACKAGE_STAGGER_MS;
-    const settleAfter = PACKAGE_ANIM_MS + lastStartDelay + 24;
+        <button
+          type="button"
+          className="absolute left-1 top-1/2 z-[1] flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[2px] border border-gold-light bg-bg-primary/95 text-gold transition-opacity hover:opacity-90 md:left-2 md:h-9 md:w-9"
+          aria-label="Previous package"
+          onClick={() => go(-1)}
+        >
+          <span className="sr-only">Previous</span>
+          <span aria-hidden className="text-lg leading-none">
+            ‹
+          </span>
+        </button>
+        <button
+          type="button"
+          className="absolute right-1 top-1/2 z-[1] flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-[2px] border border-gold-light bg-bg-primary/95 text-gold transition-opacity hover:opacity-90 md:right-2 md:h-9 md:w-9"
+          aria-label="Next package"
+          onClick={() => go(1)}
+        >
+          <span className="sr-only">Next</span>
+          <span aria-hidden className="text-lg leading-none">
+            ›
+          </span>
+        </button>
+      </div>
 
-    const ms = reducedMotion ? 0 : settleAfter;
+      <div
+        className="flex items-center justify-center gap-2 border-t border-card-border py-4"
+        role="tablist"
+        aria-label="Coaching packages"
+      >
+        {coachingPackages.map((pkg, index) => (
+          <button
+            key={pkg.title}
+            type="button"
+            role="tab"
+            aria-selected={index === slide}
+            aria-label={`${pkg.title}`}
+            className={`h-2 rounded-full transition-[width,background-color] duration-300 ease-out ${
+              index === slide ? "w-8 bg-gold" : "w-2 bg-dot-inactive"
+            }`}
+            onClick={() => setSlide(index)}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
 
-    const id = window.setTimeout(() => {
-      setPackagesVisible(false);
-      setPackagesExiting(false);
-    }, ms);
+export function OffersSection() {
+  const [packagesExpanded, setPackagesExpanded] = useState(false);
+  const [toggleBusy, setToggleBusy] = useState(false);
+  const [slide, setSlide] = useState(0);
+  const busyTimerRef = useRef<number | null>(null);
 
-    return () => window.clearTimeout(id);
-  }, [packagesExiting]);
+  useEffect(() => {
+    return () => {
+      if (busyTimerRef.current !== null) {
+        window.clearTimeout(busyTimerRef.current);
+      }
+    };
+  }, []);
 
   const togglePackages = () => {
-    if (packagesExiting) return;
+    if (toggleBusy) return;
 
-    if (packagesVisible) {
-      setPackagesExiting(true);
+    if (packagesExpanded) {
+      setToggleBusy(true);
+      setSlide(0);
+      setPackagesExpanded(false);
+      const reducedMotion =
+        typeof window !== "undefined" &&
+        window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const ms = reducedMotion ? 0 : 520;
+      if (busyTimerRef.current !== null) {
+        window.clearTimeout(busyTimerRef.current);
+      }
+      busyTimerRef.current = window.setTimeout(() => {
+        busyTimerRef.current = null;
+        setToggleBusy(false);
+      }, ms);
     } else {
-      setPackagesVisible(true);
+      setPackagesExpanded(true);
     }
   };
 
+  const clarity = offerings[0];
+  const coaching = offerings[1];
+  const workshops = offerings[2];
+
   return (
-    <section className="section-shell">
-      <div className="text-center">
-        <p className="text-xs tracking-[0.16em] text-foreground/65 uppercase">
-          What She Offers
-        </p>
-        <h2 className="mt-4 text-3xl md:text-4xl">
-          Support that meets you where you are.
-        </h2>
-      </div>
+    <section id="services" className="bg-bg-primary">
+      <div className="section-shell">
+        <div className="text-center md:text-left">
+          <span className="eyebrow">What She Offers</span>
+          <h2 className="font-cormorant text-[28px] font-semibold text-text-dark md:text-[30px]">
+            Support that meets you where you are.
+          </h2>
+        </div>
 
-      <div className="mt-12 grid gap-6 md:grid-cols-3">
-        {offerings.map((item) => {
-          if (item.title !== "1:1 Coaching") {
-            return (
-              <article key={item.title} className={cardClassName}>
-                {accentLine}
-                <h3 className="mt-4 text-2xl">{item.title}</h3>
-                <p className="mt-3 text-foreground/80">{item.description}</p>
-              </article>
-            );
-          }
-
-          return (
-            <div key={item.title} className="contents">
-              <article className={cardClassName}>
-                {accentLine}
-                <h3 className="mt-4 text-2xl">{item.title}</h3>
-                <p className="mt-3 text-foreground/80">
-                  {item.description}{" "}
-                  <button
-                    type="button"
-                    className="font-normal text-foreground underline decoration-foreground/30 underline-offset-[5px] transition hover:decoration-foreground/55 disabled:cursor-not-allowed disabled:opacity-50"
-                    aria-expanded={packagesVisible}
-                    disabled={packagesExiting}
-                    onClick={togglePackages}
-                  >
-                    {packagesVisible ? "Read less" : "Read more"}
-                  </button>
-                </p>
-              </article>
-
-              {packagesVisible ? (
-                <div className="md:hidden">
-                  <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-1">
-                    {coachingPackages.map((pkg, index) => {
-                      const delayMs = packagesExiting
-                        ? (coachingPackages.length - 1 - index) * PACKAGE_STAGGER_MS
-                        : index * PACKAGE_STAGGER_MS;
-
-                      return (
-                        <article
-                          key={pkg.title}
-                          className={`${cardClassName} min-w-[88%] snap-center ${
-                            packagesExiting ? "animate-gentle-fall" : "animate-gentle-rise"
-                          }`}
-                          style={{ animationDelay: `${delayMs}ms` }}
-                        >
-                          {accentLine}
-                          <h3 className="mt-4 text-2xl">{pkg.title}</h3>
-                          <p className="mt-3 text-foreground/80">{pkg.description}</p>
-                        </article>
-                      );
-                    })}
-                  </div>
-                </div>
-              ) : null}
-            </div>
-          );
-        })}
-
-        {packagesVisible
-          ? coachingPackages.map((pkg, index) => {
-              const delayMs = packagesExiting
-                ? (coachingPackages.length - 1 - index) * PACKAGE_STAGGER_MS
-                : index * PACKAGE_STAGGER_MS;
-
-              return (
-                <article
-                  key={`desktop-${pkg.title}`}
-                  className={`${cardClassName} hidden md:block ${
-                    packagesExiting ? "animate-gentle-fall" : "animate-gentle-rise"
-                  }`}
-                  style={{ animationDelay: `${delayMs}ms` }}
+        <div className="mt-12 grid gap-6">
+          <div className="grid gap-6 md:grid-cols-2">
+            <ServiceCard
+              title={clarity.title}
+              description={clarity.description}
+              tag={clarity.tag}
+              featured={clarity.featured}
+            />
+            <ServiceCard
+              title={coaching.title}
+              description={coaching.description}
+              tag={coaching.tag}
+              featured={coaching.featured}
+            >
+              <p>
+                {coaching.description}{" "}
+                <button
+                  type="button"
+                  className="font-inter text-base font-normal leading-[1.85] text-gold underline decoration-gold/40 underline-offset-2 hover:decoration-gold disabled:cursor-not-allowed disabled:opacity-50 md:text-[17px]"
+                  aria-expanded={packagesExpanded}
+                  disabled={toggleBusy}
+                  onClick={togglePackages}
                 >
-                  {accentLine}
-                  <h3 className="mt-4 text-2xl">{pkg.title}</h3>
-                  <p className="mt-3 text-foreground/80">{pkg.description}</p>
-                </article>
-              );
-            })
-          : null}
+                  {packagesExpanded ? "Read less" : "Read more"}
+                </button>
+              </p>
+            </ServiceCard>
+          </div>
+
+          <div
+            className={`grid overflow-hidden transition-[grid-template-rows] duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none ${
+              packagesExpanded ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
+            }`}
+          >
+            <div className="min-h-0">
+              <PackagesCarousel
+                expanded={packagesExpanded}
+                slide={slide}
+                setSlide={setSlide}
+              />
+            </div>
+          </div>
+
+          <ServiceCard
+            title={workshops.title}
+            description={workshops.description}
+            tag={workshops.tag}
+            featured={workshops.featured}
+          />
+        </div>
       </div>
     </section>
   );

@@ -55,7 +55,7 @@ export function SitePreloader() {
 
   return (
     <div
-      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-background px-6 transition-opacity duration-500 ease-out ${
+      className={`fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-bg-primary px-6 transition-opacity duration-500 ease-out ${
         exiting ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
       aria-busy={!exiting}
@@ -72,14 +72,14 @@ export function SitePreloader() {
           />
         </div>
         <div
-          className="h-1 w-56 overflow-hidden rounded-full bg-blush-soft md:w-72"
+          className="h-1 w-56 overflow-hidden rounded-[2px] bg-bg-peach md:w-72"
           role="progressbar"
           aria-valuemin={0}
           aria-valuemax={100}
           aria-valuenow={exiting ? 100 : undefined}
           aria-label="Loading"
         >
-          <div className="animate-preloader-bar h-full w-full origin-left rounded-full bg-blush" />
+          <div className="animate-preloader-bar h-full w-full origin-left rounded-[2px] bg-gold" />
         </div>
       </div>
     </div>

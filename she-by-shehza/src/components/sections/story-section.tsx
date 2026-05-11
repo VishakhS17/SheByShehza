@@ -2,29 +2,29 @@ import Image from "next/image";
 
 export function StorySection() {
   return (
-    <section className="section-shell">
-      <div className="relative">
-        <div className="pointer-events-none absolute -inset-2 -z-10 rounded-[2.8rem] bg-[radial-gradient(circle_at_68%_34%,_rgba(220,166,173,0.52),_rgba(220,166,173,0.2)_42%,_transparent_72%)] blur-2xl md:-inset-3 md:blur-3xl" />
-
-        <div className="soft-card grid gap-10 p-8 md:grid-cols-[1.05fr_1fr] md:p-12">
-          <figure className="relative mx-auto w-full overflow-hidden rounded-3xl bg-blush-soft md:mx-0">
-            <div className="relative aspect-[4/5] w-full md:aspect-auto md:min-h-[26rem]">
+    <section id="story" className="bg-bg-primary">
+      <div className="section-shell">
+        <div className="flex flex-col gap-10 md:flex-row md:items-start md:gap-16">
+          <figure className="mx-auto w-full max-w-[200px] shrink-0 md:mx-0 md:max-w-[260px]">
+            <div className="relative w-full overflow-hidden rounded-[4px]">
               <Image
                 src="/her1.jpeg"
                 alt="She by Shehza — Her story"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 45vw"
+                width={260}
+                height={347}
+                className="h-auto w-full object-cover"
+                sizes="(min-width: 768px) 260px, 200px"
                 priority
               />
             </div>
           </figure>
 
-          <div className="flex flex-col justify-center">
-            <h2 className="text-3xl md:text-4xl">
+          <div className="min-w-0 flex-1">
+            <span className="eyebrow">Her story</span>
+            <h2 className="font-cormorant text-[28px] font-semibold leading-snug text-text-dark md:text-[30px]">
               I built this space from lived experience.
             </h2>
-            <p className="mt-6 max-w-xl text-foreground/80">
+            <p className="mt-6 max-w-xl font-inter text-base font-light leading-[1.85] text-text-body md:text-[17px]">
               I know the ache of showing up for everyone while feeling distant
               from yourself. Between motherhood, work, and invisible emotional
               labor, I learned how quickly women lose their own voice. This
