@@ -8,7 +8,7 @@ export function StorySection() {
           <figure className="mx-auto w-full max-w-[200px] shrink-0 md:mx-0 md:max-w-[260px]">
             <div className="relative w-full overflow-hidden rounded-[4px]">
               <Image
-                src="/her1.jpeg"
+                src="/her.png"
                 alt="She by Shehza — Her story"
                 width={260}
                 height={347}
