@@ -21,6 +21,10 @@ export const metadata: Metadata = {
   title: "Confidence & Clarity Coach",
   description:
     "A soft and safe emotional space for women to reconnect with confidence and clarity.",
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
